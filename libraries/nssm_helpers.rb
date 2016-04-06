@@ -65,17 +65,17 @@ module ConsulTemplateCookbook
     def nssm_service_installed?
       # 1 is command not found
       # 3 is service not found
-      exit_code = shell_out!(%(#{nssm_exe} status consul-template), returns: [0, 1, 3]).exitstatus
+      exit_code = shell_out!(%("#{nssm_exe}" status consul-template), returns: [0, 1, 3]).exitstatus
       exit_code == 0 ? true : false
     end
 
     def new_version?(exe)
-      path = shell_out(%(#{nssm_exe} get consul-template Application)).stdout.delete("\0").strip
+      path = shell_out(%("#{nssm_exe}" get consul-template Application)).stdout.delete("\0").strip
       path.eql?(exe) ? false : true
     end
 
     def nssm_service_status?(expected_status)
-      expected_status.include? shell_out!(%(#{nssm_exe} status consul-template), returns: [0]).stdout.delete("\0").strip
+      expected_status.include? shell_out!(%("#{nssm_exe}" status consul-template), returns: [0]).stdout.delete("\0").strip
     end
 
     # Returns a hash of mismatched params
@@ -84,7 +84,7 @@ module ConsulTemplateCookbook
       params = node['consul_template']['service']['nssm_params'].select { |k, _v| nssm_params.include? k.to_s }
       params.each.each_with_object({}) do |(k, v), mismatch|
         # shell_out! returns values with null bytes, need to delete them before we evaluate
-        unless shell_out!(%(#{nssm_exe} get consul-template #{k}), returns: [0]).stdout.delete("\0").strip.eql? v.to_s
+        unless shell_out!(%("#{nssm_exe}" get consul-template #{k}), returns: [0]).stdout.delete("\0").strip.eql? v.to_s
           mismatch[k] = v
         end
       end
