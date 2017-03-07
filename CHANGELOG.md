@@ -7,6 +7,7 @@
            - HOTFIX: add not_if root guard for poise service user creation 
            - HOTHOTFIX: add guard to not use service stop unless windows
            - HOTHOTHOTFIX: move guard out of the powershell resource
+           - HOTFIX: plateform family and version check changed to silence chef-client warnings 
 
 0.1.2
 -----

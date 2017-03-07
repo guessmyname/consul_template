@@ -86,7 +86,8 @@ module ConsulTemplateCookbook
         service.options(:systemd, template: 'consul_template:systemd.service.erb')
         service.options(:sysvinit, template: 'consul_template:sysvinit.service.erb')
 
-        if node.platform_family?('rhel') && node.platform_version.to_i == 6
+        # Needs to be sent upstream (stops chef-client warning messages)
+        if (node['platform_family'] == 'rhel') && (node['platform_version'].to_i == 6)
           service.provider(:sysvinit)
         end
       end
