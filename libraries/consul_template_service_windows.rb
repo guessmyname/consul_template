@@ -33,7 +33,7 @@ module ConsulTemplateCookbook
             extend ::ConsulTemplateCookbook::NSSMHelpers
             action :install
             program new_resource.program
-            params new_resource.nssm_params.select { |_k, v| v != '' }
+            parameters new_resource.nssm_params.select { |_k, v| v != '' }
             args new_resource.command
             not_if { nssm_service_installed? }
           end

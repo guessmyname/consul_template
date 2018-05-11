@@ -49,7 +49,7 @@ module ConsulTemplateCookbook
 
       def command
         if node.windows?
-          %(-config """#{conf_dir}""")
+          %(-config "#{conf_dir}")
         else
           "#{program} -config #{conf_dir}"
         end

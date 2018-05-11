@@ -14,7 +14,7 @@ user = node['consul_template']['service']['user']
 group = node['consul_template']['service']['group']
 
 # Windows only
-node.default['nssm']['install_location'] = '%WINDIR%'
+node.default['nssm']['install_location'] = ENV['WINDIR']
 
 ###
 # Resources
