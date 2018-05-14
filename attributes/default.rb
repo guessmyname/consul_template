@@ -17,9 +17,12 @@ default['consul_template']['service']['data_dir'] = data_dir
 default['consul_template']['service']['environment'] = {}
 default['consul_template']['service']['user']  = 'consul-template'
 default['consul_template']['service']['group'] = 'consul-template'
+default['consul_template']['template_mode'] = 0600
+# 'init', 'runit', 'systemd', 'upstart'
+default['consul_template']['init_style'] = node['init_package']
 # Windows only
 default['consul_template']['service']['nssm_params'] = {
-  'AppDirectory'     => conf_dir,
+  'AppDirectory'     => install_path,
   'AppStdout'        => join_path(install_path,'logs','log.txt'),
   'AppStderr'        => join_path(install_path,'logs','error.txt'),
   'AppRotateFiles'   => 0,
@@ -31,6 +34,6 @@ default['consul_template']['service']['nssm_params'] = {
 # Noteworthy Overrides
 ###
 # default['consul_template']['archive_url']
-# default['consul_template']['install_path']
+default['consul_template']['install_path'] = install_path
 # default['consul_template']['service']['program']
 # default['poise-service']['consul-template']['template'] = 'cookbook:erb_file'
